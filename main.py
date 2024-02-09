@@ -1,5 +1,5 @@
 from pynput import keyboard
-import keyboard
+import keyboard as kb
 import re
 import pyautogui
 import pyperclip
@@ -16,12 +16,14 @@ filter the string():
 # keyboard listener
 
 def on_press(key):
-    if key == keyboard.KeyCode.from_char('²'):
-        search_item("solomonk")
+    if key == keyboard.Key.f8:
+        main()
 
 
-keyboard_listener = keyboard.Listener(on_press=on_press)
-keyboard_listener.start()
+
+
+# keyboard_listener = keyboard.Listener(on_press=on_press)
+# keyboard_listener.start()
 
 
 
@@ -57,26 +59,24 @@ def search_item(item):
     pyautogui.click(search_bar)
     time.sleep(.1)
     pyautogui.hotkey('ctrl', 'v') 
-    pyautogui.press('enter')
+    kb.press('enter')
     time.sleep(.8)
     pyautogui.click(first_item_found)
 
 def search_mult(items):
     for item in items:
+        print(f"{item}")
+        kb.wait("tab")
         search_item(item)
-        keyboard.wait("²")
-    
-    
-    
+        
+
+def main():
+    items = gather_items()
+    search_mult(items)
 
 
-while True:
-    pass
-
-
-
-
-
+with keyboard.Listener(on_press=on_press) as keyboard_lisener:
+    keyboard_lisener.join()
 
 
 
